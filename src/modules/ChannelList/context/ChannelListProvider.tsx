@@ -97,6 +97,7 @@ export interface ChannelListProviderProps {
 }
 
 export interface ChannelListProviderInterface extends ChannelListProviderProps {
+  allowProfileEdit: boolean;
   initialized: boolean;
   loading: boolean;
   allChannels: GroupChannel[];

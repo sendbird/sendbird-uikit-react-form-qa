@@ -108,7 +108,7 @@ export const Title = ({
 
 export interface HeaderIconButtonProps {
   className?: string;
-  onClick?: (e: MouseEvent) => void;
+  onClick?: (e: MouseEvent<HTMLElement>) => void;
   type: IconTypes;
   color?: IconColors;
   width?: string;
@@ -140,7 +140,7 @@ export interface HeaderIconProps {
   color?: IconColors;
   width?: string;
   height?: string;
-  onClick?: (e: MouseEvent) => void;
+  onClick?: (e: MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>) => void;
 }
 export const Icon = ({
   className,

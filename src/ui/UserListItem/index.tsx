@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MutableRefObject, ReactElement, useContext } from 'react';
+import React, { ChangeEvent, MutableRefObject, ReactElement, ReactNode, useContext } from 'react';
 import { User } from '@sendbird/chat';
 import { Member } from '@sendbird/chat/groupChannel';
 import './index.scss';
@@ -24,7 +24,7 @@ export interface UserListItemProps {
   action?({ actionRef, parentRef }: {
     actionRef: MutableRefObject<any>,
     parentRef?: MutableRefObject<any>,
-  }): ReactElement;
+  }): ReactNode;
   onChange?(e: ChangeEvent<HTMLInputElement>): void;
   avatarSize?: string;
   /** @deprecated Please use the onUserAvatarClick instead */

@@ -73,7 +73,7 @@ type CHANNEL_LIST_PAYLOAD_TYPES = {
   [ON_DELIVERY_RECEIPT_UPDATED]: GroupChannel;
   [CHANNEL_LIST_PARAMS_UPDATED]: {
     channelListQuery: GroupChannelListQuery;
-    currentUserId?: string,
+    currentUserId: string,
   };
 };
 

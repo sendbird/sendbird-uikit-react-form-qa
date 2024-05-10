@@ -23,7 +23,7 @@ export const EmojiListItems = ({
   closeDropdown,
 }: EmojiListItemsProps): Nullable<ReactElement> => {
   const [reactionStyle, setReactionStyle] = useState<ReactionStyle>({ left: 0, top: 0 });
-  const reactionRef: RefObject<HTMLUListElement> = useRef(null);
+  const reactionRef = useRef<HTMLUListElement>(null);
 
   /* showParent & hideParent */
   useEffect(() => {
@@ -39,8 +39,8 @@ export const EmojiListItems = ({
 
   /* setupEvents & cleanupEvents */
   useEffect(() => {
-    const handleClickOutSide = (event) => {
-      if (reactionRef?.current && !reactionRef?.current?.contains?.(event.target)) {
+    const handleClickOutSide = (event: MouseEvent) => {
+      if (reactionRef.current && !reactionRef?.current?.contains?.(event.target as any)) {
         closeDropdown();
       }
     };

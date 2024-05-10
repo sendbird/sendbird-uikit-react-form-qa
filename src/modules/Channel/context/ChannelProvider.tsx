@@ -158,6 +158,8 @@ export interface ChannelProviderInterface extends ChannelContextProps, MessageSt
   sendMultipleFilesMessage: (files: Array<File>, quoteMessage?: SendableMessageType) => Promise<MultipleFilesMessage>,
   toggleReaction(message: SendableMessageType, emojiKey: string, isReacted: boolean): void,
   renderUserMentionItem?: (props: { user: User }) => JSX.Element;
+  replyType: ReplyType;
+  threadReplySelectType: ThreadReplySelectType;
 }
 
 const ChannelContext = React.createContext<ChannelProviderInterface | null>(null);

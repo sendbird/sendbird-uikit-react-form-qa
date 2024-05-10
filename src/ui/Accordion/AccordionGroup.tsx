@@ -1,4 +1,4 @@
-import React, { type ReactElement, createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { noop } from '../../utils/utils';
 
 // # Context
@@ -21,7 +21,7 @@ export const AccordionGroupContext = createContext<AccordionGroupContextType>({
 // # Provider Component
 export interface AccordionGroupProps {
   className?: string;
-  children: ReactElement | Array<ReactElement>;
+  children: ReactNode;
   allowMultipleOpen?: boolean;
 }
 export const AccordionGroupProvider = ({

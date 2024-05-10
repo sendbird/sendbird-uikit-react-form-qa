@@ -2,7 +2,7 @@ import React, { MouseEvent } from 'react';
 import type { EmojiContainer } from '@sendbird/chat';
 import type { GroupChannel } from '@sendbird/chat/groupChannel';
 import type { OpenChannel } from '@sendbird/chat/openChannel';
-import { CoreMessageType, SendableMessageType } from '../../utils';
+import { SendableMessageType } from '../../utils';
 import { ReplyType } from '../../types';
 
 // Fixme@v4 - deleteMessageOption type, rethink options
@@ -21,7 +21,7 @@ export interface BaseMenuProps {
   showEdit?: (bool: boolean) => void;
   showRemove?: (bool: boolean) => void;
   resendMessage?: (message: SendableMessageType) => void;
-  deleteMessage?: (message: CoreMessageType) => Promise<void>;
+  deleteMessage?: (message: SendableMessageType) => Promise<void>;
   setQuoteMessage?: (message: SendableMessageType) => void;
   isReactionEnabled?: boolean;
   parentRef?: React.RefObject<HTMLElement>;

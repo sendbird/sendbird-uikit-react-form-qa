@@ -14,7 +14,7 @@ export const isMobileIOS = (userAgent: string) => {
   return isIOS && (isWebkit || isSafari);
 };
 
-export const deleteNullish = <T>(obj: T): T => {
+export const deleteNullish = <T extends object>(obj: T): T => {
   const cleaned = {} as T;
   Object.entries(obj).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {

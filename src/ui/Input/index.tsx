@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, RefObject, useState } from 'react';
+import React, { ForwardedRef, ReactElement, ReactNode, useState } from 'react';
 
 import './index.scss';
 
@@ -25,7 +25,7 @@ export interface InputProps {
   placeHolder?: string;
   autoFocus?: boolean;
 }
-const Input = React.forwardRef((props: InputProps, ref: RefObject<HTMLInputElement>) => {
+const Input = React.forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>) => {
   const {
     name,
     required,

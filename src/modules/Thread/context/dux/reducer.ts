@@ -5,7 +5,7 @@ import { ChannelStateTypes, ParentMessageStateTypes, ThreadListStateTypes } from
 import { compareIds } from '../utils';
 import { ThreadContextActionTypes as actionTypes } from './actionTypes';
 import { ThreadContextInitialState } from './initialState';
-import { SendableMessageType } from '../../../../utils';
+import { CoreMessageType, SendableMessageType } from '../../../../utils';
 
 interface ActionInterface {
   type: actionTypes;
@@ -88,7 +88,7 @@ export default function reducer(
     case actionTypes.INITIALIZE_THREAD_LIST_SUCCESS: {
       const { parentMessage, anchorMessage, threadedMessages } = action.payload;
       const anchorMessageCreatedAt = (!anchorMessage?.messageId) ? parentMessage?.createdAt : anchorMessage?.createdAt;
-      const anchorIndex = threadedMessages.findIndex((message) => message?.createdAt > anchorMessageCreatedAt);
+      const anchorIndex = (threadedMessages as CoreMessageType[]).findIndex((message) => message?.createdAt > anchorMessageCreatedAt);
       const prevThreadMessages = anchorIndex > -1 ? threadedMessages.slice(0, anchorIndex) : threadedMessages;
       const anchorThreadMessage = anchorMessage?.messageId ? [anchorMessage] : [];
       const nextThreadMessages = anchorIndex > -1 ? threadedMessages.slice(anchorIndex) : [];
@@ -359,7 +359,7 @@ export default function reducer(
     }
     case actionTypes.ON_FILE_INFO_UPLOADED: {
       const { channelUrl, requestId, index, uploadableFileInfo, error } = action.payload;
-      if (!compareIds(channelUrl, state.currentChannel?.url)) {
+      if (!compareIds(channelUrl, state.currentChannel?.url ?? '')) {
         return state;
       }
       /**
@@ -368,7 +368,7 @@ export default function reducer(
        */
       if (error) return state;
       const { localThreadMessages } = state;
-      const messageToUpdate = localThreadMessages.find((message) => compareIds(hasReqId(message) && message.reqId, requestId),
+      const messageToUpdate = localThreadMessages.find((message) => compareIds(hasReqId(message) ? message.reqId : '', requestId),
       );
       const fileInfoList = (messageToUpdate as MultipleFilesMessage)
         .messageParams?.fileInfoList;
@@ -382,7 +382,7 @@ export default function reducer(
     }
     case actionTypes.ON_TYPING_STATUS_UPDATED: {
       const { channel, typingMembers } = action.payload;
-      if (!compareIds(channel.url, state.currentChannel?.url)) {
+      if (!compareIds(channel.url, state.currentChannel?.url ?? '')) {
         return state;
       }
       return {

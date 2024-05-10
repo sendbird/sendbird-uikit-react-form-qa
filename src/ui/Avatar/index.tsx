@@ -1,4 +1,4 @@
-import React, { ReactElement, RefObject } from 'react';
+import React, { ForwardedRef, ReactElement } from 'react';
 import ImageRenderer from '../ImageRenderer';
 import './index.scss';
 import AvatarDefault from './AvatarDefault';
@@ -167,7 +167,7 @@ function Avatar(
     onClick,
     customDefaultComponent,
   }: AvatarProps,
-  ref: RefObject<HTMLDivElement>,
+  ref: ForwardedRef<HTMLDivElement>,
 ): ReactElement {
   return (
     <div

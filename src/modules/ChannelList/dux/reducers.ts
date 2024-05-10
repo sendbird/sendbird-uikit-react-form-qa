@@ -121,7 +121,7 @@ export default function channelListReducer(
         const { channel, isMe } = action.payload;
         const { allChannels, currentUserId, currentChannel, channelListQuery, disableAutoSelect } = state;
         let nextChannels = [...allChannels];
-        let nextChannel: GroupChannel = channel;
+        let nextChannel: GroupChannel | null = channel;
 
         /**
          * 1. If I left channel:

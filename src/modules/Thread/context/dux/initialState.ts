@@ -8,10 +8,10 @@ import {
 import { CoreMessageType, SendableMessageType } from '../../../../utils';
 
 export interface ThreadContextInitialState {
-  currentChannel: GroupChannel;
+  currentChannel: GroupChannel | null;
   allThreadMessages: Array<CoreMessageType>;
   localThreadMessages: Array<CoreMessageType>;
-  parentMessage: SendableMessageType;
+  parentMessage: SendableMessageType | null;
   channelState: ChannelStateTypes;
   parentMessageState: ParentMessageStateTypes;
   threadListState: ThreadListStateTypes;

@@ -9,49 +9,38 @@ export interface FallbackTemplateMessageItemBodyProps {
   message: BaseMessage;
   isByMe?: boolean;
 }
-export function FallbackTemplateMessageItemBody({
-  className,
-  message,
-  isByMe,
-}: FallbackTemplateMessageItemBodyProps): ReactElement {
+export function FallbackTemplateMessageItemBody({ className, message, isByMe }: FallbackTemplateMessageItemBodyProps): ReactElement {
   const { stringSet } = useContext(LocalizationContext);
-  const text = message['message'];
+  const text = message.isAdminMessage() || message.isUserMessage() ? message.message : undefined;
 
   return (
     <div
-      className={getClassName([
-        className ?? '',
-        isByMe ? 'outgoing' : 'incoming',
-        'sendbird-template-message-item-body__fallback_message',
-      ])}
+      className={getClassName([className ?? '', isByMe ? 'outgoing' : 'incoming', 'sendbird-template-message-item-body__fallback_message'])}
     >
-      {
-        text
-          ? <>
-            <Label
-              type={LabelTypography.BODY_1}
-              color={LabelColors.ONCONTENT_INVERSE_1}
-            >
-              {text}
-            </Label>
-          </>
-          : <>
-            <Label
-              className='sendbird-template-message-item-body__fallback_message__header'
-              type={LabelTypography.BODY_1}
-              color={LabelColors.ONCONTENT_INVERSE_1}
-            >
-              {stringSet.UNKNOWN__TEMPLATE_ERROR}
-            </Label>
-            <Label
-              className='sendbird-template-message-item-body__fallback_message__description'
-              type={LabelTypography.BODY_1}
-              color={LabelColors.ONCONTENT_INVERSE_5}
-            >
-              {stringSet.UNKNOWN__CANNOT_READ_TEMPLATE}
-            </Label>
-          </>
-      }
+      {text ? (
+        <>
+          <Label type={LabelTypography.BODY_1} color={LabelColors.ONCONTENT_INVERSE_1}>
+            {text}
+          </Label>
+        </>
+      ) : (
+        <>
+          <Label
+            className="sendbird-template-message-item-body__fallback_message__header"
+            type={LabelTypography.BODY_1}
+            color={LabelColors.ONCONTENT_INVERSE_1}
+          >
+            {stringSet.UNKNOWN__TEMPLATE_ERROR}
+          </Label>
+          <Label
+            className="sendbird-template-message-item-body__fallback_message__description"
+            type={LabelTypography.BODY_1}
+            color={LabelColors.ONCONTENT_INVERSE_5}
+          >
+            {stringSet.UNKNOWN__CANNOT_READ_TEMPLATE}
+          </Label>
+        </>
+      )}
     </div>
   );
 }

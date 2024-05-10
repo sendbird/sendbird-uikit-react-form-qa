@@ -42,7 +42,8 @@ const pubSubFactory = <
     publish: (topic, info) => {
       if (topics[topic]) {
         topics[topic].forEach((fn) => {
-          setTimeout(() => fn(info !== undefined ? info : {}), 0);
+          fn(info !== undefined ? info : {});
+          // setTimeout(() => fn(info !== undefined ? info : {}), 0);
         });
       }
     },

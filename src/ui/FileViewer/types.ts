@@ -54,7 +54,7 @@ export interface FileInfo {
 }
 
 export interface BaseViewer {
-  onClose: (e: React.MouseEvent | React.KeyboardEvent) => void;
+  onClose: (e: MouseEvent | KeyboardEvent) => void;
 }
 
 export interface SingleFileViewer extends SenderInfo, FileInfo, BaseViewer {

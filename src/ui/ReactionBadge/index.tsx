@@ -1,8 +1,8 @@
 import React, {
+  ForwardedRef,
   KeyboardEvent,
   MouseEvent,
   ReactElement,
-  RefObject,
   TouchEvent,
 } from 'react';
 
@@ -20,7 +20,7 @@ export interface ReactionBadgeProps {
     e: MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>
   ) => void;
 }
-const ReactionBadge = React.forwardRef((props: ReactionBadgeProps, ref: RefObject<HTMLDivElement>): ReactElement => {
+const ReactionBadge = React.forwardRef((props: ReactionBadgeProps, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
   const {
     className = '',
     children,

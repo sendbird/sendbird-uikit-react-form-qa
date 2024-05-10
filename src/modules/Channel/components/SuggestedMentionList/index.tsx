@@ -7,6 +7,9 @@ export type SuggestedMentionListProps = Omit<SuggestedMentionListViewProps, 'cur
 
 export const SuggestedMentionList = (props: SuggestedMentionListProps) => {
   const { currentGroupChannel } = useChannelContext();
+
+  if (!currentGroupChannel) return null;
+
   return (
     <SuggestedMentionListView
       {...props}

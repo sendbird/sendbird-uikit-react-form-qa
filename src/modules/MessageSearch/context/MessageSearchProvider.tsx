@@ -42,8 +42,8 @@ interface MessageSearchProviderInterface extends MessageSearchProviderProps {
   allMessages: MessageSearchReducerState['allMessages'];
   loading: boolean;
   isInvalid: boolean;
-  currentChannel: GroupChannel;
-  currentMessageSearchQuery: MessageSearchQuery;
+  currentChannel: GroupChannel | null;
+  currentMessageSearchQuery: MessageSearchQuery | null;
   hasMoreResult: boolean;
   onScroll: UseScrollCallbackType;
   handleRetryToConnect: () => void;

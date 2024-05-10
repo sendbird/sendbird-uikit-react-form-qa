@@ -12,7 +12,7 @@ import Header, { type HeaderCustomProps } from '../../../../ui/Header';
 
 export interface GroupChannelHeaderViewProps extends HeaderCustomProps {
   className?: string;
-  currentChannel: GroupChannel;
+  currentChannel: GroupChannel | null;
   showSearchIcon?: boolean;
   onBackClick?: () => void;
   onSearchClick?: () => void;

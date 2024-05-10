@@ -10,8 +10,8 @@ export interface State {
   loading: boolean;
   isInvalid: boolean;
   initialized: boolean;
-  currentChannel: GroupChannel;
-  currentMessageSearchQuery: MessageSearchQuery;
+  currentChannel: GroupChannel | null;
+  currentMessageSearchQuery: MessageSearchQuery | null;
   hasMoreResult: boolean;
 }
 

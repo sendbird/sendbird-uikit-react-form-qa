@@ -9,7 +9,7 @@ import Icon, { IconTypes, IconColors } from '../Icon';
 import * as utils from './utils';
 
 interface Props {
-  channel: GroupChannel;
+  channel: GroupChannel | null;
   userId: string;
   theme: string;
   width?: number,

@@ -6,7 +6,7 @@ export interface State {
   allMessages: Array<CoreMessageType>;
   loading: boolean;
   initialized: boolean;
-  currentOpenChannel: OpenChannel;
+  currentOpenChannel: OpenChannel | null;
   isInvalid: boolean;
   hasMore: boolean;
   lastMessageTimestamp: number;

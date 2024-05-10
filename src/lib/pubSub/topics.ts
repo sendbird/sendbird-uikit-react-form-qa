@@ -62,7 +62,7 @@ export type SBUGlobalPubSubTopicPayloadUnion =
           requestId: string;
           index: number;
           uploadableFileInfo: UploadableFileInfo;
-          error: Error;
+          error?: Error;
         };
         publishingModules: PublishingModuleType[];
       };

@@ -1,9 +1,7 @@
 import React, {
-  FocusEvent,
+  FocusEvent, ForwardedRef,
   MouseEvent,
-  ReactElement,
   ReactNode,
-  RefObject,
   useState,
 } from 'react';
 
@@ -23,8 +21,8 @@ export interface IconButtonProps {
 
 const IconButton = React.forwardRef((
   props: IconButtonProps,
-  ref: RefObject<HTMLButtonElement>,
-): ReactElement => {
+  ref: ForwardedRef<HTMLButtonElement>,
+) => {
   const {
     className = '',
     children,

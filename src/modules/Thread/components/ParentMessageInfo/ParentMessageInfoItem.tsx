@@ -42,7 +42,7 @@ import { openURL } from '../../../../utils/utils';
 
 export interface ParentMessageInfoItemProps {
   className?: string;
-  message: SendableMessageType;
+  message: SendableMessageType | null;
   showFileViewer?: (bool: boolean) => void;
   onBeforeDownloadFileMessage?: OnBeforeDownloadFileMessageType;
 }
@@ -76,14 +76,15 @@ export default function ParentMessageInfoItem({
   // For MultipleFilesMessage only.
   const statefulFileInfoList = useFileInfoListWithUploaded(message);
   const isMentionedMessage = isMentionEnabled
-    && message?.mentionedMessageTemplate?.length > 0
+    && message?.mentionedMessageTemplate
+    && message.mentionedMessageTemplate?.length > 0
     && message?.mentionedUsers
     && message.mentionedUsers.length > 0;
 
   // Emoji reactions
   const isReactionActivated = isReactionEnabled
     && config.groupChannel.replyType === 'thread'
-    && message?.reactions?.length > 0;
+    && message?.reactions && message.reactions?.length > 0;
 
   const tokens = useMemo(() => {
     if (isMentionedMessage) {
@@ -99,11 +100,11 @@ export default function ParentMessageInfoItem({
 
   // Only for the FileMessageItemBody
   const downloadFileWithUrl = () => {
-    if (isFileMessage(message)) openURL(message.url);
+    if (message && isFileMessage(message)) openURL(message.url);
   };
   const handleOnClickTextButton = onBeforeDownloadFileMessage
     ? async () => {
-      if (message.messageType === 'file') {
+      if (message?.isFileMessage()) {
         try {
           const allowDownload = await onBeforeDownloadFileMessage({ message: message as FileMessage });
           if (allowDownload) {
@@ -125,7 +126,7 @@ export default function ParentMessageInfoItem({
 
   return (
     <div className={`sendbird-parent-message-info-item ${className}`}>
-      {isUserMessage(message) && (
+      {message && isUserMessage(message) && (
         <Label
           className="sendbird-parent-message-info-item__text-message"
           type={LabelTypography.BODY_1}
@@ -234,7 +235,7 @@ export default function ParentMessageInfoItem({
         )
       }
       {
-        isMultipleFilesMessage(message) && (
+          message && isMultipleFilesMessage(message) && (
           <MultipleFilesMessageItemBody
             className="sendbird-parent-message-info-item__multiple-files-message-wrapper"
             message={message as MultipleFilesMessage}
@@ -244,22 +245,22 @@ export default function ParentMessageInfoItem({
             statefulFileInfoList={statefulFileInfoList}
             onBeforeDownloadFileMessage={onBeforeDownloadFileMessage}
           />
-        )
+          )
       }
       {
-        isVoiceMessage(message as FileMessage) && (
+          message && isVoiceMessage(message) && (
           <div className="sendbird-parent-message-info-item__voice-message">
             <VoiceMessageItemBody
               className="sendbird-parent-message-info-item__voice-message__item"
               message={message as FileMessage}
-              channelUrl={currentChannel?.url}
+              channelUrl={currentChannel?.url ?? ''}
               isByMe={false}
               isReactionEnabled={isReactionEnabled}
             />
           </div>
-        )
+          )
       }
-      {isThumbnailMessage(message) && (
+      {message && isThumbnailMessage(message) && (
         <div
           className="sendbird-parent-message-info-item__thumbnail-message"
           onClick={() => {
@@ -311,7 +312,7 @@ export default function ParentMessageInfoItem({
           )}
         </div>
       )}
-      {getUIKitMessageType(message) === getUIKitMessageTypes?.()?.UNKNOWN && (
+      {message && getUIKitMessageType(message) === getUIKitMessageTypes?.()?.UNKNOWN && (
         <div className="sendbird-parent-message-info-item__unknown-message">
           <Label
             className="sendbird-parent-message-info-item__unknown-message__header"

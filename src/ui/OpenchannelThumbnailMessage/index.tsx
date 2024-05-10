@@ -1,6 +1,5 @@
 import React, {
   useRef,
-  useMemo,
   useState,
   useEffect,
   useContext,
@@ -83,17 +82,6 @@ export default function OpenchannelThumbnailMessage({
     onClick: () => { onClick(true); },
   });
   const { isMobile } = useMediaQueryContext();
-
-  const memorizedThumbnailPlaceHolder = useMemo(() => (type) => ({ style }) => ( // eslint-disable-line
-    <div style={style}>
-      <Icon
-        type={type}
-        fillColor={IconColors.ON_BACKGROUND_2}
-        width="56px"
-        height="56px"
-      />
-    </div>
-  ), []);
 
   const isMessageSent = checkIsSent(status);
   const isPending = checkIsPending(status);
@@ -227,7 +215,14 @@ export default function OpenchannelThumbnailMessage({
                                   width={messageWidth}
                                   height="270px"
                                   alt="image"
-                                  placeHolder={memorizedThumbnailPlaceHolder(IconTypes.PLAY)}
+                                  placeHolder={({ style }) => (<div style={style}>
+                                    <Icon
+                                        type={IconTypes.PLAY}
+                                        fillColor={IconColors.ON_BACKGROUND_2}
+                                        width="56px"
+                                        height="56px"
+                                    />
+                                  </div>)}
                                 />
                               )
                               : (
@@ -264,7 +259,14 @@ export default function OpenchannelThumbnailMessage({
                           alt="image"
                           width={messageWidth}
                           height="270px"
-                          placeHolder={memorizedThumbnailPlaceHolder(IconTypes.PHOTO)}
+                          placeHolder={({ style }) => (<div style={style}>
+                            <Icon
+                                type={IconTypes.PHOTO}
+                                fillColor={IconColors.ON_BACKGROUND_2}
+                                width="56px"
+                                height="56px"
+                            />
+                          </div>)}
                         />
                       )
                       : (

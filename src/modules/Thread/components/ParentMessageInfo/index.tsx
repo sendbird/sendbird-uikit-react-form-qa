@@ -68,7 +68,7 @@ export default function ParentMessageInfo({
   });
   const isMentionEnabled = groupChannel.enableMention;
   const replyType = getCaseResolvedReplyType(groupChannel.replyType).upperCase;
-  const isByMe = userId === parentMessage.sender.userId;
+  const isByMe = userId === parentMessage?.sender.userId;
 
   // Mobile
   const mobileMenuRef = useRef(null);
@@ -99,7 +99,7 @@ export default function ParentMessageInfo({
     && isMentionEnabled
     && mentionNickname.length > 0
     && !isMuted
-    && !(isChannelFrozen && !(currentChannel.myRole === Role.OPERATOR));
+    && !(isChannelFrozen && !(currentChannel?.myRole === Role.OPERATOR));
 
   const mentionNodes = useDirtyGetMentions({ ref: editMessageInputRef }, { logger });
   const ableMention = mentionNodes?.length < userMention?.maxMentionCount;
@@ -300,7 +300,7 @@ export default function ParentMessageInfo({
         />
       </div>
       {/* context menu */}
-      {!isMobile && (
+      {!isMobile && parentMessage && (
         <MessageItemMenu
           className={classnames('sendbird-parent-message-info__context-menu', isReactionEnabled && 'use-reaction', supposedHover && 'sendbird-mouse-hover')}
           channel={currentChannel}
@@ -312,12 +312,14 @@ export default function ParentMessageInfo({
           showRemove={setShowRemove}
           setSupposedHover={setSupposedHover}
           onMoveToParentMessage={() => {
-            onMoveToParentMessage?.({ message: parentMessage, channel: currentChannel });
+            if (parentMessage && currentChannel && onMoveToParentMessage) {
+              onMoveToParentMessage?.({ message: parentMessage, channel: currentChannel });
+            }
           }}
           deleteMessage={deleteMessage}
         />
       )}
-      {(isReactionEnabled && !isMobile) && (
+      {(isReactionEnabled && !isMobile) && parentMessage && (
         <MessageItemReactionMenu
           className={classnames('sendbird-parent-message-info__reaction-menu', supposedHover && 'sendbird-mouse-hover')}
           message={parentMessage}
@@ -327,7 +329,7 @@ export default function ParentMessageInfo({
           setSupposedHover={setSupposedHover}
         />
       )}
-      {showRemove && (
+      {showRemove && parentMessage && (
         <RemoveMessage
           onCancel={() => setShowRemove(false)}
           onSubmit={() => {
@@ -341,15 +343,17 @@ export default function ParentMessageInfo({
           message={parentMessage as FileMessage}
           onClose={() => setShowFileViewer(false)}
           onDelete={() => {
-            deleteMessage(parentMessage)
-              .then(() => {
-                setShowFileViewer(false);
-              });
+            if (parentMessage) {
+              deleteMessage(parentMessage)
+                .then(() => {
+                  setShowFileViewer(false);
+                });
+            }
           }}
           onDownloadClick={handleOnDownloadClick}
         />
       )}
-      {showMobileMenu && (
+      {showMobileMenu && currentChannel && parentMessage && (
         <MobileMenu
           parentRef={mobileMenuRef}
           channel={currentChannel}

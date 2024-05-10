@@ -1,8 +1,8 @@
 import React, {
+  ForwardedRef,
   MouseEvent,
   ReactElement,
   ReactNode,
-  RefObject,
 } from 'react';
 import './index.scss';
 
@@ -15,7 +15,7 @@ export interface FeedbackIconButtonProps {
 
 const FeedbackIconButton = React.forwardRef((
   props: FeedbackIconButtonProps,
-  ref: RefObject<HTMLButtonElement>,
+  ref: ForwardedRef<HTMLButtonElement>,
 ): ReactElement => {
   const {
     children,

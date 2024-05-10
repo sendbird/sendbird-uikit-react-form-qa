@@ -258,7 +258,7 @@ export const isFileMessage = (message?: CoreMessageType): message is FileMessage
 export const isMultipleFilesMessage = (
   message?: CoreMessageType,
 ): message is MultipleFilesMessage => (
-  message && (
+  !!message && (
     message['isMultipleFilesMessage'] && typeof message.isMultipleFilesMessage === 'function'
       ? message.isMultipleFilesMessage()
       : (
@@ -294,6 +294,7 @@ export const getMessageContentMiddleClassNameByContainerType = ({
    * FULL: template message only.
    * WIDE: all message types.
    */
+  // @ts-ignore
   const containerType: string | undefined = message.extendedMessagePayload?.['ui']?.['container_type'];
   if (!isMobile) return UI_CONTAINER_TYPES.DEFAULT;
   if (containerType === MessageContentMiddleContainerType.WIDE) {
@@ -368,7 +369,7 @@ export const isEditedMessage = (
   message: CoreMessageType,
 ): boolean => isUserMessage(message) && (message?.updatedAt > 0);
 export const isEnabledOGMessage = (message: UserMessage): boolean => (
-  (!message || !message.ogMetaData || !message.ogMetaData.url) ? false : true
+  (!(!message || !message.ogMetaData || !message.ogMetaData.url))
 );
 
 export const getUIKitMessageTypes = (): UIKitMessageTypes => ({ ...UIKitMessageTypes });
@@ -470,7 +471,7 @@ export const getUseReaction = (store: UIKitStore, channel: GroupChannel | OpenCh
   return store?.config?.isReactionEnabled;
 };
 
-export function getSuggestedReplies(message?: BaseMessage): string[] {
+export function getSuggestedReplies(message?: BaseMessage | null): string[] {
   if (message?.extendedMessagePayload && Array.isArray(message?.extendedMessagePayload?.suggested_replies)) {
     return message.extendedMessagePayload.suggested_replies;
   } else {
@@ -545,7 +546,7 @@ export const getEmojiMapAll = (emojiContainer: EmojiContainer): Map<string, Emoj
   });
   return emojiMap;
 };
-const findEmojiUrl = (targetKey: string) => ({ key }) => key === targetKey;
+const findEmojiUrl = (targetKey: string) => ({ key }: Emoji) => key === targetKey;
 export const getEmojiUrl = (emojiContainer?: EmojiContainer, emojiKey?: string): string => {
   const isFindingKey = findEmojiUrl(emojiKey ?? '');
   return emojiContainer?.emojiCategories
@@ -603,6 +604,7 @@ export const filterMessageListParams = (
   }
   if (params?.senderUserIdsFilter && params?.senderUserIdsFilter?.length > 0) {
     if (message?.isUserMessage?.() || message?.isFileMessage?.()) {
+      // @ts-ignore
       const messageSender = (message as SendableMessageType).sender || message['_sender'];
       if (!params?.senderUserIdsFilter?.includes(messageSender?.userId)) {
         return false;
@@ -807,6 +809,7 @@ export const filterChannelListParams = (params: GroupChannelListQuery, channel: 
   }
   const { cachedMetaData = {} } = channel;
   if (metadataKey && (metadataValues || metadataValueStartsWith)) {
+    // @ts-ignore
     const metadataValue: string = cachedMetaData[metadataKey];
     if (!metadataValue) {
       return false;

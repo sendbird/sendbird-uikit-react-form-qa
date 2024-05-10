@@ -7,8 +7,8 @@ import { LocalizationContext } from '../../lib/LocalizationContext';
 import * as utils from './utils';
 
 interface Props {
-  channel: OpenChannel;
   theme: string;
+  channel?: OpenChannel | null;
   height?: number;
   width?: number;
 }

@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import React, { ForwardedRef } from 'react';
 import { ThreadInfo } from '@sendbird/chat/message';
 
 import './index.scss';
@@ -19,7 +19,7 @@ export function ThreadReplies(
     threadInfo,
     onClick,
   }: ThreadRepliesProps,
-  ref: RefObject<HTMLDivElement>,
+  ref: ForwardedRef<HTMLDivElement>,
 ): React.ReactElement {
   const {
     mostRepliedUsers = [],

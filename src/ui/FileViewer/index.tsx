@@ -1,6 +1,6 @@
 import './index.scss';
 
-import React, { MouseEvent, ReactElement, useContext, useRef } from 'react';
+import React, { MouseEvent, KeyboardEvent, ReactElement, useContext, useRef } from 'react';
 import { FileMessage, MultipleFilesMessage } from '@sendbird/chat/message';
 import { createPortal } from 'react-dom';
 import { LocalizationContext } from '../../lib/LocalizationContext';
@@ -145,7 +145,7 @@ export interface FileViewerProps {
   statefulFileInfoList?: UploadedFileInfoWithUpload[]
   isByMe?: boolean;
   currentIndex?: number;
-  onClose: (e: MouseEvent) => void;
+  onClose: (e: MouseEvent | KeyboardEvent) => void;
   onDelete?: (e: MouseEvent) => void;
   onClickLeft?: () => void;
   onClickRight?: () => void;
